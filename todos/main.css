@@ -4,18 +4,6 @@
        
 }
 
-button {
-    border: none;
-    background-color: unset;
-    border-radius: 10px;
-    padding: 1vh;
-    margin: 0 1vh;
-}
-
-button:focus {
-    outline: none;
-}
-
 .body {
     background: #f5f5f5;
 }
@@ -44,14 +32,26 @@ button:focus {
     box-shadow: inset 0 -1px 5px 0 rgb(0 0 0 / 20%);
 }
 
+.main__inputMark {
+    border: none;
+    background-color: unset;
+    border-radius: 10px;
+    padding: 1vh;
+    margin: 0 1vh;
+}
+
 .main__task {
     list-style: none;
 }
 
 .main__bottom {
     display: flex;
-    justify-content: space-between;
-    width: 50vw;
+    justify-content: center;
+    width: 45 vw;
+    margin-top: 2vh;
+    padding: 5px;
+    border: 1px solid #999;
+    box-shadow: 0 2px 2px rgb(0 0 0 / 20%);
 }
 
 .taskInput__field {
@@ -62,24 +62,56 @@ button:focus {
     width: 22vw;
 }
 
-.taskInput__field:focus {
+.taskInput__field:focus, .main__inputMark:focus {
     outline: none;
 }
 
-.task__listik {
-    width:550px;
-    height:58px;
-    border:rgba(0, 0, 0, 0.5) solid;
-    padding: 5px;
-    display: flex;
-    justify-content: center;
+.markimg {
+    width: 2vw;
     align-items: center;
-    margin: 10px;
+    opacity: 0.6;
+}
+
+.task__listik {
+
+    padding: 5px 5px 5px 10px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    border: 1px solid #999;
+    width: 28.9vw;
+    height: 5vh;
+    box-shadow: inset 0 -1px 5px 0 rgb(0 0 0 / 20%);
 }
 
 .main__filter {
     display: flex;
     justify-content: space-around;
+}
+
+.main__filter_all {
+    border: 1px solid rgba(175, 47, 47, 0.15);
+    border-radius: 3px;
+    margin-left: 5vh;
+    padding: 1vh;
+}
+
+.main__filter_active {
+    border: 1px solid rgba(175, 47, 47, 0.15);
+    border-radius: 3px;
+    margin: 0 1vh;
+    padding: 1vh;
+}
+
+.main__filter_done {
+    border: 1px solid rgba(175, 47, 47, 0.15);
+    border-radius: 3px;
+    margin-right: 5vh;
+    padding: 1vh;
+}
+
+.main__filter_all:focus, .main__filter_active, .main__filter_done {
+    outline:#f5f5f5;
 }
 
 .main__counter{
@@ -107,3 +139,18 @@ button:focus {
 .hidden {
     display: none;
 }
+
+.transparent35 {
+    opacity: 0.35;
+}
+
+.rewrite {
+    margin-right: 15px;
+}
+
+.author {
+    margin-top: 5vh;
+    color: rgba(185, 151, 110, 0.5);
+    font-size: 12px;
+}
+

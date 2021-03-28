@@ -94,7 +94,8 @@ $(function() {
         arr.forEach(obj => {
            if(obj.isChecked) {count++}
        }); 
-       if (arr.length == count) {btn.prop("disabled", true)} else {btn.prop("disabled", false)};
+       if (arr.length == count) {btn.prop("disabled", true); $(".markimg").addClass("transparent35")}
+        else {btn.prop("disabled", false); $(".markimg").removeClass("transparent35")};
        console.log(count)
        if (arr.length === 0) {$(".main__bottom").addClass("hidden"); $(".main__inputMark").addClass("hidden");
         } else {$(".main__bottom").removeClass("hidden"); $(".main__inputMark").removeClass("hidden")}
@@ -111,6 +112,8 @@ $(function() {
                 $("#"+obj.id).prop("checked", true);
                 obj.isChecked = true;
             }
+
+            
             // else if (($("#"+obj.id).prop("checked"))){
                 
             // }
