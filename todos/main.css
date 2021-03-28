@@ -23,7 +23,7 @@
 }
 
 .main__input {
-    
+   
     display: flex;
     justify-content: start;
     border: 1px solid #999;
@@ -85,6 +85,7 @@
 }
 
 .main__filter {
+    
     display: flex;
     justify-content: space-around;
 }
@@ -94,6 +95,8 @@
     border-radius: 3px;
     margin-left: 5vh;
     padding: 1vh;
+    color: rgba(128, 66, 66, 0.65);
+    font-weight: 700;
 }
 
 .main__filter_active {
@@ -101,6 +104,8 @@
     border-radius: 3px;
     margin: 0 1vh;
     padding: 1vh;
+    color: rgba(128, 66, 66, 0.65);
+    font-weight: 700;
 }
 
 .main__filter_done {
@@ -108,17 +113,29 @@
     border-radius: 3px;
     margin-right: 5vh;
     padding: 1vh;
+    color: rgba(128, 66, 66, 0.65);
+    font-weight: 700;
 }
 
-.main__filter_all:focus, .main__filter_active, .main__filter_done {
+.main__filter_all:focus, .main__filter_active, .main__filter_done, .main__cleaner {
     outline:#f5f5f5;
+}
+
+.main__cleaner {
+    border: 1px solid rgba(175, 47, 47, 0.15);
+    border-radius: 3px;
+    padding: 1vh;
+    color: rgba(128, 66, 66, 0.65);
+    font-weight: 700;
 }
 
 .main__counter{
     display: flex;
     justify-content: center;
     align-items: center;
+    color: rgba(128, 66, 66, 0.45);
 }
+
 
 #test1 {
     display: flex;
