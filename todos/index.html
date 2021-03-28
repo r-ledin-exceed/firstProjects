@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>ToDo app</title>
+</head>
+
+<body>
+    <div class="container">
+        <main class="main">
+            <h1 class="main__header">todos</h1>
+            <div class="main__input">
+                <button class="main__inputMark" id="mainMarker">Mark all</button>
+                <input class="taskInput__field" id="taskInput" placeholder="What needs to be done?" type="text"/>
+            </div>
+
+            <ul class="main__task" id="task"></ul>
+
+            <div class="main__bottom">   
+                <div class="main__counter" id="outputField">0 items left</div>
+                <div class="main__filter">
+                    <button class="main__filter_all">Show all</button>
+                    <button class="main__filter_active">Show active</button>
+                    <button class="main__filter_done">Show done</button>
+                </div>
+                <button class="main__cleaner">Clear completed</button>
+            </div>
+        </main>
+    </div>
+    <div id="test1"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
+
+
+
