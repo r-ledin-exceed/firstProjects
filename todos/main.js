@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable func-names */
 /* eslint-disable no-undef */
 $(() => {
   let arr = [];
@@ -10,9 +8,9 @@ $(() => {
   // LEFT COUNTER
   function itemsLeft() {
     let count = 0;
-    if (arr.length) {
+    if (arr.length > 0) {
       arr.forEach((obj) => {
-        if (!obj.isChecked) { count += count; }
+        if (!obj.isChecked) { count += 1; }
         $('#outputField').text(
           `${count} items left`,
         );
@@ -23,14 +21,15 @@ $(() => {
       );
     }
   }
+  itemsLeft();
 
   // ENABLE-DISABLE MARKER
   function btnCheck() {
-    let count = 0;
+    let countTwo = 0;
     arr.forEach((obj) => {
-      if (obj.isChecked) { count += count; }
+      if (obj.isChecked) { countTwo += 1; }
     });
-    if (arr.length === count) { btn.prop('disabled', true); $('.markimg').addClass('transparent35'); } else { btn.prop('disabled', false); $('.markimg').removeClass('transparent35'); }
+    if (arr.length === countTwo) { btn.prop('disabled', true); $('.markimg').addClass('transparent35'); } else { btn.prop('disabled', false); $('.markimg').removeClass('transparent35'); }
     if (arr.length === 0) {
       $('.main__bottom').addClass('hidden'); $('.main__inputMark').addClass('hidden');
     } else { $('.main__bottom').removeClass('hidden'); $('.main__inputMark').removeClass('hidden'); }
@@ -56,7 +55,6 @@ $(() => {
 
     if ((event.keyCode === 13) && (obj.name !== '')) {
       arr.push(obj);
-
       $('#task').append($(`
             <li class="task__listik" id="list${obj.id}">
             <input type = "text" id="rewrite${obj.id}" class="rewrite hidden">
@@ -65,7 +63,7 @@ $(() => {
             <button class="hidden" id="button${obj.id}">delete</button></li>
             `));
 
-      id += id;
+      id += 1;
       $('#taskInput').val('');
       itemsLeft();
       btnCheck();
@@ -73,22 +71,22 @@ $(() => {
   });
 
   // TOGGLE SOLO CHECKBOXES, CLICK ON DEL BUTT
-  getter.onclick = function (e) {
+  getter.onclick = function toggleOnClick(e) {
     document.getElementById.innerHTML = e.target.id;
 
-    arr.forEach((obj) => {
+    arr.forEach((obj, index) => {
       if (obj.id === +e.target.id) {
         if (!obj.isChecked) {
-          obj.isChecked = true;
+          arr[index].isChecked = true;
           $(`#span${e.target.id}`).toggleClass('active').removeClass('inactive');
         } else {
-          obj.isChecked = false;
+          arr[index].isChecked = false;
           $(`#span${e.target.id}`).toggleClass('inactive').removeClass('active');
         }
       }
 
       if (`button${obj.id}` === e.target.id) {
-        obj.status = 'deleted';
+        arr[index].status = 'deleted';
 
         const neededInd = arr.findIndex((object) => object.status === 'deleted');
         $(`#list${obj.id}`).remove();
@@ -101,32 +99,12 @@ $(() => {
 
   // MARKER
   btn.click(() => {
-    arr.forEach((obj) => {
+    arr.forEach((obj, index) => {
       if (!($(`#${obj.id}`).prop('checked'))) {
         $(`#span${obj.id}`).toggleClass('active').removeClass('inactive');
         $(`#${obj.id}`).prop('checked', true);
-        obj.isChecked = true;
+        arr[index].isChecked = true;
       }
-
-      // else if (($("#"+obj.id).prop("checked"))){
-
-      // }
-
-      // else {
-      //     $("#span"+obj.id).toggleClass("inactive").removeClass("active");
-      //     $("#"+obj.id).prop("checked", false);
-      //     obj.isChecked = false;
-      // }
-
-      // if($("input:checkbox").prop("checked")) {
-      //     $("#span"+obj.id).toggleClass("inactive").removeClass("active");
-      //     $("#"+obj.id).prop("checked", false);
-      //     obj.isChecked = false;
-      // } else {
-      //     $("#span"+obj.id).toggleClass("active").removeClass("inactive");
-      //     $("#"+obj.id).prop("checked", true);
-      //     obj.isChecked = true;
-      // }
     });
     btnCheck();
     itemsLeft();
@@ -145,7 +123,6 @@ $(() => {
   $('.main__filter_done').click(() => {
     arr.forEach((obj) => {
       if (!obj.isChecked) {
-        // $("#list"+obj.id).css("display", "block");
         $(`#list${obj.id}`).addClass('hidden');
       } else {
         $(`#list${obj.id}`).removeClass('hidden');
@@ -161,27 +138,14 @@ $(() => {
   // CLEAN COMPLETED
   $('.main__cleaner').click(() => {
     rebuild();
-
-    // arr.forEach(obj => {
-    //     if(obj.isChecked){
-    //         debugger
-    //         obj.status = "deleted";
-
-    //         let neededInd = arr.findIndex(obj => obj.status === "deleted");
-    //         $("#list"+obj.id).remove();
-    //         arr.splice(neededInd, 1)
-
-    //     };
-    // });
-
     btnCheck();
   });
 
   // RENAME
-  getter.ondblclick = (function (e) {
+  getter.ondblclick = (function renaming(e) {
     document.getElementById.innerHTML = e.target.id;
 
-    arr.forEach((obj) => {
+    arr.forEach((obj, index) => {
       if (`span${obj.id}` === e.target.id || `list${obj.id}` === e.target.id) {
         inputVal = obj.name;
         $(`#rewrite${obj.id}`).removeClass('hidden').val(inputVal);
@@ -190,39 +154,21 @@ $(() => {
 
         $(`#rewrite${obj.id}`).keyup((event) => {
           if (((event.keyCode === 13) && (obj.name !== '')) || (event.keyCode === 27)) {
-            obj.name = $(`#rewrite${obj.id}`).val();
+            arr[index].name = $(`#rewrite${obj.id}`).val();
 
             $(`#span${obj.id}`).text(obj.name);
 
             $(`#rewrite${obj.id}`).addClass('hidden');
             $(`#${obj.id}`).removeClass('hidden');
             $(`#span${obj.id}`).removeClass('hidden');
-
-            // getter.onclick(function(e) {
-            //     document.getElementById.innerHTML = e.target.id;
-            //     if (e.target.id != "rewrite"+obj.id) {
-            //         $("#rewrite"+obj.id).addClass("hidden");
-            //         $("#"+obj.id).removeClass("hidden");
-            //         $("#span"+obj.id).removeClass("hidden");
-            //     }
-            // });
           }
         });
-
-        // $("#rewrite"+obj.id).keyup(function(event){
-        //     if((event.keyCode == 27) && (obj.name != "")) {
-
-        //         $("#rewrite"+obj.id).addClass("hidden");
-        //         $("#"+obj.id).removeClass("hidden");
-        //         $("#span"+obj.id).removeClass("hidden");
-        //     };
-        // });
       }
     });
   });
 
   // BUT DELETE
-  getter.onmouseover = (function (e) {
+  getter.onmouseover = (function hoverOne(e) {
     document.getElementById.innerHTML = e.target.id;
 
     arr.forEach((obj) => {
@@ -232,7 +178,7 @@ $(() => {
       }
     });
   });
-  getter.onmouseout = (function (e) {
+  getter.onmouseout = (function hoverTwo(e) {
     document.getElementById.innerHTML = e.target.id;
 
     arr.forEach((obj) => {
