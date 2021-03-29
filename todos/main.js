@@ -31,7 +31,6 @@ $(() => {
       if (obj.isChecked) { count += count; }
     });
     if (arr.length === count) { btn.prop('disabled', true); $('.markimg').addClass('transparent35'); } else { btn.prop('disabled', false); $('.markimg').removeClass('transparent35'); }
-    console.log(count);
     if (arr.length === 0) {
       $('.main__bottom').addClass('hidden'); $('.main__inputMark').addClass('hidden');
     } else { $('.main__bottom').removeClass('hidden'); $('.main__inputMark').removeClass('hidden'); }
@@ -66,10 +65,8 @@ $(() => {
             <button class="hidden" id="button${obj.id}">delete</button></li>
             `));
 
-      // eslint-disable-next-line no-plusplus
-      id++;
+      id += id;
       $('#taskInput').val('');
-      console.log(arr);
       itemsLeft();
       btnCheck();
     }
@@ -77,12 +74,9 @@ $(() => {
 
   // TOGGLE SOLO CHECKBOXES, CLICK ON DEL BUTT
   getter.onclick = function (e) {
-    // debugger
     document.getElementById.innerHTML = e.target.id;
-    console.log(e.target.id);
 
     arr.forEach((obj) => {
-      // debugger
       if (obj.id === +e.target.id) {
         if (!obj.isChecked) {
           obj.isChecked = true;
@@ -94,7 +88,6 @@ $(() => {
       }
 
       if (`button${obj.id}` === e.target.id) {
-        // debugger
         obj.status = 'deleted';
 
         const neededInd = arr.findIndex((object) => object.status === 'deleted');
@@ -200,8 +193,6 @@ $(() => {
             obj.name = $(`#rewrite${obj.id}`).val();
 
             $(`#span${obj.id}`).text(obj.name);
-
-            console.log(arr);
 
             $(`#rewrite${obj.id}`).addClass('hidden');
             $(`#${obj.id}`).removeClass('hidden');
