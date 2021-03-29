@@ -4,6 +4,7 @@ $(() => {
   let id = 0;
   const btn = $('#mainMarker');
   const getter = document.getElementById('task');
+  const anotherGetter = document.getElementById('body');
 
   // LEFT COUNTER
   function itemsLeft() {
@@ -20,16 +21,12 @@ $(() => {
         '0 items left',
       );
     }
+    console.log(arr);
   }
   itemsLeft();
 
   // ENABLE-DISABLE MARKER
   function btnCheck() {
-    let countTwo = 0;
-    arr.forEach((obj) => {
-      if (obj.isChecked) { countTwo += 1; }
-    });
-    if (arr.length === countTwo) { btn.prop('disabled', true); $('.markimg').addClass('transparent35'); } else { btn.prop('disabled', false); $('.markimg').removeClass('transparent35'); }
     if (arr.length === 0) {
       $('.main__bottom').addClass('hidden'); $('.main__inputMark').addClass('hidden');
     } else { $('.main__bottom').removeClass('hidden'); $('.main__inputMark').removeClass('hidden'); }
@@ -55,6 +52,7 @@ $(() => {
 
     if ((event.keyCode === 13) && (obj.name !== '')) {
       arr.push(obj);
+
       $('#task').append($(`
             <li class="task__listik" id="list${obj.id}">
             <input type = "text" id="rewrite${obj.id}" class="rewrite hidden">
@@ -92,20 +90,61 @@ $(() => {
         $(`#list${obj.id}`).remove();
         arr.splice(neededInd, 1);
       }
+
+      if (`rewrite${obj.id}` !== e.target.id) {
+        $(`#rewrite${obj.id}`).addClass('hidden');
+        $(`#${obj.id}`).removeClass('hidden');
+        $(`#span${obj.id}`).removeClass('hidden');
+      }
+
     });
     itemsLeft();
     btnCheck();
   };
 
-  // MARKER
-  btn.click(() => {
-    arr.forEach((obj, index) => {
-      if (!($(`#${obj.id}`).prop('checked'))) {
-        $(`#span${obj.id}`).toggleClass('active').removeClass('inactive');
-        $(`#${obj.id}`).prop('checked', true);
-        arr[index].isChecked = true;
+  // ONBLUR WHILE RENAME
+  anotherGetter.onclick = function toggleOnClickSecond(e) {
+    document.getElementById.innerHTML = e.target.id;
+    arr.forEach((obj, ) => {
+    if (`rewrite${obj.id}` !== e.target.id) {
+      $(`#rewrite${obj.id}`).addClass('hidden');
+      $(`#${obj.id}`).removeClass('hidden');
+      $(`#span${obj.id}`).removeClass('hidden');
       }
     });
+      itemsLeft();
+      btnCheck();
+  };
+
+  // ONE MORE CHECKER
+  checkitout = function checkItOutMark(e) {
+    let count = 0;
+    debugger
+    arr.forEach(obj => {
+      if (obj.isChecked) { count += 1 }
+    });
+    if (count === arr.length) {return e = true} else {return e = false}     
+  };
+
+  // MARKER
+  btn.click(() => {
+    let e = checkitout();
+    debugger
+    if (e) {
+      arr.forEach((obj, index) => {
+        $(`#span${obj.id}`).toggleClass('inactive').removeClass('active');
+        $(`#${obj.id}`).prop('checked', false);
+        arr[index].isChecked = false;
+      });
+    } else {
+      arr.forEach((obj, index) => {
+        if (!($(`#${obj.id}`).prop('checked'))) {
+          $(`#span${obj.id}`).toggleClass('active').removeClass('inactive');
+          $(`#${obj.id}`).prop('checked', true);
+          arr[index].isChecked = true;
+        };
+      });
+    };
     btnCheck();
     itemsLeft();
   });
@@ -143,8 +182,7 @@ $(() => {
 
   // RENAME
   getter.ondblclick = (function renaming(e) {
-    document.getElementById.innerHTML = e.target.id;
-
+    
     arr.forEach((obj, index) => {
       if (`span${obj.id}` === e.target.id || `list${obj.id}` === e.target.id) {
         inputVal = obj.name;
@@ -153,7 +191,7 @@ $(() => {
         $(`#span${obj.id}`).addClass('hidden');
 
         $(`#rewrite${obj.id}`).keyup((event) => {
-          if (((event.keyCode === 13) && (obj.name !== '')) || (event.keyCode === 27)) {
+          if ((event.keyCode === 13) && (obj.name !== '')) {
             arr[index].name = $(`#rewrite${obj.id}`).val();
 
             $(`#span${obj.id}`).text(obj.name);
@@ -161,8 +199,13 @@ $(() => {
             $(`#rewrite${obj.id}`).addClass('hidden');
             $(`#${obj.id}`).removeClass('hidden');
             $(`#span${obj.id}`).removeClass('hidden');
-          }
+          } else if (event.keyCode === 27) {
+            $(`#rewrite${obj.id}`).addClass('hidden');
+            $(`#${obj.id}`).removeClass('hidden');
+            $(`#span${obj.id}`).removeClass('hidden');
+            };
         });
+
       }
     });
   });
