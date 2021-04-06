@@ -1,33 +1,33 @@
 /* eslint-disable no-undef */
 $(() => {
-  let tasks = [];
+  let tasks = []; // зачем испольщуется этот массив?
   let id = 0;
   const btn = $('#mainMarker'); // button
   const getter = document.getElementById('task'); // clicker (get an id)
-  const getterWindow = document.getElementById('body');
+  const getterWindow = document.getElementById('body'); // плохое имя, это можно назвать просто  body или bodyDom, bodyElement.. выше тоже
 
   // LEFT COUNTER
   function itemsLeft() {
     let count = 0;
     if (tasks.length > 0) {
       tasks.forEach((obj) => {
-        if (!obj.isChecked) { count += 1; }
-        $('#outputField').text(
+        if (!obj.isChecked) { count += 1; } // count++
+        $('#outputField').text( // все строковые константы нужно занести в переменные, выше тоже
           `${count} items left`,
         );
       });
     } else {
-      $('#outputField').text(
+      $('#outputField').text( // вынести в отдельную (можно локальную) функцию и передавать в качестве параметра ${count}
         '0 items left',
       );
     }
   }
-  itemsLeft();
+  itemsLeft(); // отдельно обэявить все необходимые функции и потом вызвать в нужной последовательности их в конце файла
 
   // HIDE BOTTOMBAR
-  function btnCheck() {
+  function btnCheck() { // мне кажется что комментарий в camelCase будет более хорошим нащванием для функции названием
     if (tasks.length === 0) {
-      $('.main__bottom').addClass('hidden'); $('.main__inputMark').addClass('hidden');
+      $('.main__bottom').addClass('hidden'); $('.main__inputMark').addClass('hidden'); // в принципе пойдёт, но .main__bottom  константы и разбить на несколько строк
     } else { $('.main__bottom').removeClass('hidden'); $('.main__inputMark').removeClass('hidden'); }
   }
   btnCheck();
@@ -121,7 +121,7 @@ $(() => {
     tasks.forEach((obj) => {
       if (obj.isChecked) { count += 1; }
     });
-    if (count === tasks.length) { return true; }
+    if (count === tasks.length) { return true; } // return count === tasks.length;
     return false;
   };
 
@@ -153,19 +153,36 @@ $(() => {
       if (obj.isChecked) {
         $(`#list${obj.id}`).addClass('hidden');
       } else {
-        $(`#list${obj.id}`).removeClass('hidden');
+        $(`#list${obj.id}`).removeClass('hidden'); // написать функцию которая вернёт идентификатор, типо getListId = obj => `#list${obj.id}`
       }
     });
   });
   $('.main__filter_done').click(() => {
     tasks.forEach((obj) => {
-      if (!obj.isChecked) {
+      if (!obj.isChecked) {  // тоже копипаста, это не декларативно, лучше сделать функцию, принимающую лямбду для проверки и возвращающую функцию onclick
         $(`#list${obj.id}`).addClass('hidden');
       } else {
         $(`#list${obj.id}`).removeClass('hidden');
       }
     });
   });
+  // про копипасту
+  /*
+  const createOnClickMainFilter = (checkFunc) => () => {
+    tasks.forEach((obj) => {
+      if (checkFunc(obj)) {  // тоже копипаста, это не декларативно, лучше сделать функцию, принимающую лямбду для проверки и возвращающую функцию onclick
+        $(`#list${obj.id}`).addClass('hidden');
+      } else {
+        $(`#list${obj.id}`).removeClass('hidden');
+      }
+    });
+  }
+  $('.main__filter_active').click(createOnClickMainFilter(obj => obj.isChecked));
+  $('.main__filter_done').click(createOnClickMainFilter(obj => !obj.isChecked));
+  // кода стало меньше и самому читать будет проще)
+  */
+  
+  
   $('.main__filter_all').click(() => {
     tasks.forEach((obj) => {
       $(`#list${obj.id}`).removeClass('hidden');
@@ -197,7 +214,7 @@ $(() => {
             $(`#${obj.id}`).removeClass('hidden');
             $(`#span${obj.id}`).removeClass('hidden');
           } else if (event.keyCode === 27) {
-            $(`#rewrite${obj.id}`).addClass('hidden');
+            $(`#rewrite${obj.id}`).addClass('hidden'); // мне кажется или этот блок кода повторяется? если да - вынеси в отдельную функцию
             $(`#${obj.id}`).removeClass('hidden');
             $(`#span${obj.id}`).removeClass('hidden');
           }
@@ -223,7 +240,8 @@ $(() => {
     tasks.forEach((obj) => {
       if (`list${obj.id}` === e.target.id || `span${obj.id}` === e.target.id || obj.id === +e.target.id
             || `button${obj.id}` === e.target.id || `rewrite${obj.id}` === e.target.id) {
-        $(`#button${obj.id}`).addClass('hidden');
+        $(`#button${obj.id}`).addClass('hidden'); // копипаста, меняется только removeClass на addClass, сделай функцию в которую ты будешь передавать коллбек или на крайняк имя метода, который будешь дёргать
+        // createGetterMouseCallback = (classMethodName) => .....  $(`#button${obj.id}`)[classMethodName]('hidden'); ....
       }
     });
   });
